@@ -7,7 +7,7 @@ import picamera
 from argparse import ArgumentParser
 
 
-class CameraClient(self):
+class CameraClient:
     def __init__(self, server, port):
         self.server = server
         self.port = port
