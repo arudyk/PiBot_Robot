@@ -16,7 +16,7 @@ class CameraClient:
 
     def connect(self):
         client_socket = socket.socket()
-        client_socket.connect((server, port))
+        client_socket.connect((self.server, self.port))
         # Make a file-like object out of the connection
         connection = client_socket.makefile('wb')
         try:
