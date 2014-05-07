@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 
-""" Andriy Rudyk
+"""
+Andriy Rudyk
 Tim Sizemore
 
 Camera operation module
@@ -96,6 +97,7 @@ def main():
     take_picture(PICTURE_NAME + '.jpg', WIDTH, HEIGHT)
     rects, img = detect(PICTURE_NAME + '.jpg')
     box(rects, img)
+    os.system('display capture_DETECTED.jpg')
 
 
 if __name__ == '__main__':
