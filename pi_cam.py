@@ -1,7 +1,6 @@
 #!/usr/bin/env python2
 
-"""
-Andriy Rudyk
+""" Andriy Rudyk
 Tim Sizemore
 
 Camera operation module
@@ -9,7 +8,8 @@ Camera operation module
 """
 
 import picamera
-from time import sleep
+#from time import sleep
+import time
 import os
 import io
 import cv2
@@ -23,10 +23,11 @@ def take_picture(filename, width, height):
     """
     Takes a picture width x height and saves us filename.
     """
-    picamera.resolution = (width, height)
-    # According to API camera needs 0.2 seconds warm up at start.
-    time.sleep(0.2)
-    camera.capture(filename)
+    with picamera.PiCamera() as cam:
+        picamera.resolution = (width, height)
+        # According to API camera needs 0.2 seconds warm up at start.
+        time.sleep(0.2)
+        cam.capture(filename)
 
 
 def ocv_object():
@@ -34,8 +35,8 @@ def ocv_object():
     Takes a picture then converts that data to an array that Open CV can use.
     """
     stream = io.BytesIO()
-    with picamera.PiCamera() as cam
-    cam.start_preview()
+    with picamera.PiCamera() as cam:
+    	cam.start_preview()
     time.sleep(2)
     camera.capture(stream, format='jpeg')
 
@@ -88,12 +89,12 @@ def detect(path):
 def box(rects, img):
     for x1, y1, x2, y2 in rects:
         cv2.rectangle(img, (x1, y1), (x2, y2), (127, 255, 0), 2)
-    cv2.imwrite(PICTURE_NAME, img)
+    cv2.imwrite(PICTURE_NAME + '_DETECTED.jpg', img)
 
 
 def main():
-    take_picture(PICTURE_NAME, WIDTH, HEIGHT)
-    rects, img = detect(PICTURE_NAME + '_DETECTED')
+    take_picture(PICTURE_NAME + '.jpg', WIDTH, HEIGHT)
+    rects, img = detect(PICTURE_NAME + '.jpg')
     box(rects, img)
 
 
